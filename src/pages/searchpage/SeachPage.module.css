@@ -1,0 +1,13 @@
+.search-box {
+  margin: 20px;
+}
+
+.recent-search :global .ant-list-header {
+  font-size: 24px;
+}
+
+.container {
+  max-width: 600px;
+  margin: 20px auto;
+  text-align: center;
+}

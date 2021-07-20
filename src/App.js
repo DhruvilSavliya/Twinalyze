@@ -1,8 +1,14 @@
 import React, { Component } from "react";
+import "antd/dist/antd.css";
+import SearchPage from "./pages/searchpage/SearchPage";
 
 class App extends Component {
   render() {
-    return <h1>Hello, World</h1>;
+    return (
+      <div>
+        <SearchPage />
+      </div>
+    );
   }
 }
 
