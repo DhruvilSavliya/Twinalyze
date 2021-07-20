@@ -4,6 +4,9 @@ import "./index.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
+import Amplify from "aws-amplify";
+import awsconfig from "./aws-exports";
+Amplify.configure(awsconfig);
 
 ReactDOM.render(
   <React.StrictMode>
