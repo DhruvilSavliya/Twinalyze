@@ -1,9 +1,15 @@
 import React, { Component } from "react";
+import { withAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
 
 class App extends Component {
   render() {
-    return <h1>Hello, World</h1>;
+    return (
+      <div>
+        <AmplifySignOut />
+        My App
+      </div>
+    );
   }
 }
 
-export default App;
+export default withAuthenticator(App);

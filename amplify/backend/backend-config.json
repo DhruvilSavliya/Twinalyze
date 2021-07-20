@@ -1,0 +1,10 @@
+{
+  "auth": {
+    "csci5409bf172f73": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  }
+}
