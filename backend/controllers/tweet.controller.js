@@ -1,10 +1,12 @@
 const Exception = require('../lib/exceptions');
 const AWS = require('aws-sdk');
+const Twit = require('twit');
 const AnalysisModel = require('../model/analysis.model');
 const Utils = require('../lib/Utils');
+require('dotenv').config();
 
 // The name of the bucket that you have created
-const BUCKET_NAME = 'csci5409';
+const BUCKET_NAME = 'tweet-box';
 
 const T = new Twit({
     consumer_key: process.env.CONSUMER_KEY,
@@ -19,8 +21,18 @@ class TweetController {
         try {
             const {uid, searchKeyword} = req.body;
 
-            const twitterApiResult = await T.get('search/tweets', { q: 'covid-19', count: 20 });
-            console.log(twitterApiResult)
+            let twitterApiResult = [];
+
+            const fetchTweets = async (query) => {
+                return new Promise(resolve => {
+                    T.get('search/tweets', { q: searchKeyword, count: 20 }, function(err, data, resp){
+                        twitterApiResult = data.statuses;
+                        resolve();
+                    });
+                })
+            };
+
+            await fetchTweets(searchKeyword);
 
             const analysisId = await Utils.generateId(5);
             const uploadFile = async(content, index) => {
@@ -70,7 +82,7 @@ class TweetController {
 
             return res.sendResponse({
                 success: true,
-                message: 'Analysis Started.',
+                message: 'Analysis retrived.',
                 data: analysisData
             });
 
@@ -84,11 +96,11 @@ class TweetController {
         try {
             const {analysisId} = req.params;
 
-            const analysisData = await AnalysisModel.getRecentAnalysisByUserId(uid);
+            const analysisData = await AnalysisModel.getTweetReportByAnalysisId(analysisId);
 
             return res.sendResponse({
                 success: true,
-                message: 'Analysis Started.',
+                message: 'Tweet report retrived.',
                 data: analysisData
             });
 

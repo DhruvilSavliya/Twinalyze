@@ -3,8 +3,6 @@ const bodyParser = require('body-parser');
 const routes = require('./routes/');
 const response = require('./middlewares/response');
 const PORT = process.env.PORT || 5000;
-const tweet = require('./controllers/tweet.controller');
-tweet.startAnalysis();
 
 const app = express();
 app.use((req, res, next) => {

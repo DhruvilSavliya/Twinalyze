@@ -6,7 +6,7 @@ class AnalysisModel{
                 const params = {
                     TableName: "analysis",
                     Item: {
-                        analysisId,
+                        analysis_id: analysisId,
                         uid,
                         status: "PENDING"
                     }
@@ -37,7 +37,7 @@ class AnalysisModel{
                     ExpressionAttributeNames: {
                         "#uid": "uid",
                     },
-                    ExpressionAttributeValues: { ":uid_val": parseInt(uid) }
+                    ExpressionAttributeValues: { ":uid_val": uid }
                 };
                 db.scan(params, function(err, data) {
                     if (err) {
@@ -60,11 +60,11 @@ class AnalysisModel{
             try {
                 const params = {
                     TableName: "tweet_db",
-                    FilterExpression: "#analysisId = :analysisId_val",
+                    FilterExpression: "#analysis_id = :analysis_id_val",
                     ExpressionAttributeNames: {
-                        "#analysisId": "analysisId",
+                        "#analysis_id": "analysis_id",
                     },
-                    ExpressionAttributeValues: { ":analysisId_val": parseInt(analysisId) }
+                    ExpressionAttributeValues: { ":analysis_id_val": analysisId }
                 };
                 db.scan(params, function(err, data) {
                     if (err) {
