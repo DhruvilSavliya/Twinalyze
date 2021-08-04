@@ -1,14 +1,10 @@
 const Exception = require('../lib/exceptions');
 const AWS = require('aws-sdk');
+const AnalysisModel = require('../model/analysis.model');
 const Utils = require('../lib/Utils');
-
-//Constants
-const ID = 'ASIAUFWLHNZ7U2IULR5R';
-const SECRET = 'e2nLIckdQEqX2wSY2d0+9Ei77C2+B6C3uyyd3nxx';
 
 // The name of the bucket that you have created
 const BUCKET_NAME = 'csci5409';
-
 
 class TweetController {
     static async startAnalysis(req, res) {
@@ -29,30 +25,30 @@ class TweetController {
 
             const analysisId = await Utils.generateId(5);
             const uploadFile = async(content, index) => {
-                const buf = Buffer.from(JSON.stringify(content));
-                const data = {
-                    Bucket: BUCKET_NAME,
-                    Key: uid+'_'+analysisId+'_'+index+'.json',
-                    Body: buf,
-                    ContentEncoding: 'base64',
-                    ContentType: 'application/json'
-                };
-                const s3 = new AWS.S3({
-                    accessKeyId: ID,
-                    secretAccessKey: SECRET
-                });
-
-                s3.upload(data, function(s3Err, data) {
-                    if (s3Err) throw s3Err
-                    console.log(`File uploaded successfully at ${data.Location}`)
+                return new Promise(async(resolve) => {
+                    const buf = Buffer.from(JSON.stringify(content));
+                    const data = {
+                        Bucket: BUCKET_NAME,
+                        Key: uid + '_' + analysisId + '_' + index + '.json',
+                        Body: buf,
+                        ContentEncoding: 'base64',
+                        ContentType: 'application/json'
+                    };
+                    const s3 = new AWS.S3();
+                    s3.upload(data, function (s3Err, data) {
+                        if (s3Err) throw s3Err
+                        console.log(`File uploaded successfully at ${data.Location}`);
+                        resolve();
+                    });
                 });
             }
 
             let asyncCall = [];
 
-            twitterApiResult.forEach(tweet => {
-                console.log(tweet)
-               asyncCall.push(uploadFile(tweet,1));
+            await AnalysisModel.startAnalysis(analysisId, uid);
+
+            twitterApiResult.forEach((tweet,i) => {
+                asyncCall.push(uploadFile(tweet,i+1));
             });
 
             await Promise.all(asyncCall);
@@ -67,6 +63,23 @@ class TweetController {
         }
     }
 
+    static async getAnalysisByUser(req, res) {
+        try {
+            const {uid} = req.params;
+
+            const analysisData = await AnalysisModel.getRecentAnalysisByUserId(uid);
+
+            return res.sendResponse({
+                success: true,
+                message: 'Analysis Started.',
+                data: analysisData
+            });
+
+        } catch (error) {
+            console.error('Error in getAnalysisByUser', error);
+            return res.sendError(new Exception('GeneralError'));
+        }
+    }
 }
 
 module.exports = TweetController;
