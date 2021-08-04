@@ -54,5 +54,32 @@ class AnalysisModel{
             }
         });
     }
+
+    static async getTweetReportByAnalysisId(analysisId) {
+        return new Promise(async(resolve, reject) => {
+            try {
+                const params = {
+                    TableName: "tweet_db",
+                    FilterExpression: "#analysisId = :analysisId_val",
+                    ExpressionAttributeNames: {
+                        "#analysisId": "analysisId",
+                    },
+                    ExpressionAttributeValues: { ":analysisId_val": parseInt(analysisId) }
+                };
+                db.scan(params, function(err, data) {
+                    if (err) {
+                        console.error('Error in analysis model: getTweetReportByAnalysisId', err);
+                        reject();
+                    } else {
+                        resolve(data["Items"]);
+                    }
+                });
+
+            } catch (error) {
+                console.error('Error in analysis model: getTweetReportByAnalysisId: ', error);
+                reject();
+            }
+        });
+    }
 }
 module.exports = AnalysisModel;
