@@ -25,7 +25,7 @@ class TweetController {
 
             const fetchTweets = async (query) => {
                 return new Promise(resolve => {
-                    T.get('search/tweets', { q: searchKeyword, count: 20 }, function(err, data, resp){
+                    T.get('search/tweets', { q: query, count: 20 }, function(err, data, resp){
                         twitterApiResult = data.statuses;
                         resolve();
                     });
@@ -56,7 +56,7 @@ class TweetController {
 
             let asyncCall = [];
 
-            await AnalysisModel.startAnalysis(analysisId, uid);
+            await AnalysisModel.startAnalysis(analysisId, uid, searchKeyword);
 
             twitterApiResult.forEach((tweet,i) => {
                 asyncCall.push(uploadFile(tweet,i+1));
