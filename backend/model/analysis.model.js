@@ -11,7 +11,7 @@ class AnalysisModel{
                         uid,
                         searchKeyword,
                         date: moment().unix(),
-                        status: "PENDING"
+                        analysis_status: "PENDING"
                     }
                 };
                 db.put(params, function(err, data) {
