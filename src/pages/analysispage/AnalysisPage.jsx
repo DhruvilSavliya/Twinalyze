@@ -1,9 +1,12 @@
-import { notification } from 'antd'
+import { Col, notification, Row } from 'antd'
 import React from 'react'
 import { useState } from 'react'
 import { Fragment } from 'react'
 import { useEffect } from 'react'
+import { Container, Button } from 'react-bootstrap'
 import { useParams } from 'react-router'
+import { useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import SentimentBarGraph from '../../components/sentiment-bar-graph/SentimentBarGraph'
 import SentimentGraph from '../../components/sentiment-graph/SentimentGraph'
 import axios, { Routes } from '../../services/axios'
@@ -12,6 +15,8 @@ const AnalysisPage = () => {
   const { id } = useParams()
   const [sentimentArray, setSentimentArray] = useState([])
   const [tweetList, setTweetList] = useState([])
+
+  const history = useHistory()
 
   useEffect(() => {
     loadTweetData(id)
@@ -46,23 +51,46 @@ const AnalysisPage = () => {
   }
 
   return (
-    <div>
-      {tweetList &&
-        tweetList.map((tweet, index) => {
-          return (
-            <Fragment>
-              <div>Tweet: {tweet.text}</div>
-              <SentimentBarGraph
-                key={index}
-                sentimentScore={tweet.sentiment.SentimentScore}
-                sentiment={tweet.sentiment.Sentiment}
-                tweetNumber={tweet.tweetNumber}
-              />
-            </Fragment>
-          )
-        })}
-      {sentimentArray && <SentimentGraph sentimentAnalysis={sentimentArray} />}
-    </div>
+    <Container>
+      <div>
+        <Button onClick={() => history.push('/')} variant='success'>
+          Go Back
+        </Button>
+        <Fragment>
+          {tweetList &&
+            tweetList
+              .sort((a, b) => a.tweetNumber - b.tweetNumber)
+              .map((tweet, index) => {
+                return (
+                  <div className='mt-3' style={{ border: '2px solid black' }}>
+                    <Row className='w-100'>
+                      <Col className='d-flex flex-column justify-content-center w-100'>
+                        <div className='text-center py-2'>
+                          Tweet: {tweet.text}
+                          <hr />
+                        </div>
+                        <SentimentBarGraph
+                          key={index}
+                          sentimentScore={tweet.sentiment.SentimentScore}
+                          sentiment={tweet.sentiment.Sentiment}
+                          tweetNumber={tweet.tweetNumber}
+                          className='py-2'
+                        />
+                      </Col>
+                    </Row>
+                  </div>
+                )
+              })}
+        </Fragment>
+        <Fragment>
+          {sentimentArray && (
+            <div className='mt-3'>
+              <SentimentGraph sentimentAnalysis={sentimentArray} />
+            </div>
+          )}
+        </Fragment>
+      </div>
+    </Container>
   )
 }
 

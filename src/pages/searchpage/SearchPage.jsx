@@ -11,6 +11,7 @@ import { Auth } from 'aws-amplify'
 import axios, { Routes } from '../../services/axios'
 import SentimentBarGraph from '../../components/sentiment-bar-graph/SentimentBarGraph'
 import AnalysisPage from '../analysispage/AnalysisPage'
+import moment from 'moment'
 
 const cx = c.bind(styles)
 
@@ -75,7 +76,6 @@ const SearchPage = () => {
 
   return (
     <div className={cx('container')}>
-      <AnalysisPage />
       <Search
         value={searchValue}
         className={cx('search-box')}
@@ -106,7 +106,7 @@ const SearchPage = () => {
                   {d.analysis_status}
                 </td>
                 <td onClick={() => tableRowClickHandler(d.analysis_id)}>
-                  {d.date}
+                  {moment.unix(d.date).format('LLL')}
                 </td>
                 <td onClick={() => tableRowClickHandler(d.analysis_id)}>
                   {d.searchKeyword}
