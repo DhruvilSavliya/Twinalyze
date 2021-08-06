@@ -53,7 +53,11 @@ const SentimentBarGraph = ({ tweetNumber, sentimentScore, sentiment }) => {
     ],
   };
 
-  return <CreateChart type="bar" data={data} options={options} />;
+  return (
+    <div style={{ height: 300, width: 300, margin: "auto" }}>
+      <CreateChart type="bar" data={data} options={options} />
+    </div>
+  );
 };
 
 export default SentimentBarGraph;
