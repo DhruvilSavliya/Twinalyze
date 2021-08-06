@@ -8,6 +8,7 @@ import Search from "antd/lib/input/Search";
 import { useEffect } from "react";
 import { Auth } from "aws-amplify";
 import axios, { Routes } from "../../services/axios";
+import SentimentBarGraph from "../../components/sentiment-bar-graph/SentimentBarGraph";
 
 const cx = c.bind(styles);
 
