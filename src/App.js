@@ -7,7 +7,6 @@ import SentimentGraph from "./components/sentiment-graph/SentimentGraph";
 
 class App extends Component {
   render() {
-    console.log(Auth.currentAuthenticatedUser());
     return (
       <div>
         <SentimentGraph />
