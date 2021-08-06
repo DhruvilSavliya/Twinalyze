@@ -5,6 +5,9 @@ import { SearchOutlined } from "@ant-design/icons";
 import styles from "./SeachPage.module.css";
 import c from "classnames/bind";
 import Search from "antd/lib/input/Search";
+import { useEffect } from "react";
+import { Auth } from "aws-amplify";
+import axios, { Routes } from "../../services/axios";
 
 const cx = c.bind(styles);
 
@@ -13,22 +16,45 @@ const { Option } = Select;
 const SearchPage = () => {
   const [recentSearchList, setRecentSearchList] = useState(searchData);
   const [searchValue, setSearchValue] = useState(null);
+  const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    fetchUserInfo();
+  }, []);
+
+  const fetchUserInfo = async () => {
+    const userInfo = await Auth.currentUserPoolUser();
+    setUserId(userInfo.attributes.sub);
+  };
 
   const handleChange = (value) => {
     if (value === null || value.replace(" ", "") === "") {
       notification.error({
         message: "Please enter non empty string",
       });
+      return;
     }
     if (recentSearchList.indexOf(value) === -1) {
       const list = [value, ...recentSearchList];
       setRecentSearchList(list);
     }
+    triggerAnalysis(value);
   };
 
-  const options = recentSearchList.map((searchTerm, index) => {
-    return <Option key={index}>{searchTerm}</Option>;
-  });
+  const triggerAnalysis = async (searchWord) => {
+    try {
+      const { url, method } = Routes.api.startAnalysis();
+      const { data } = await axios[method](url, {
+        uid: userId,
+        searchKeyword: searchWord,
+      });
+      notification.success({
+        message: "Analysis Started, will update on shortly",
+      });
+    } catch (err) {
+      notification.error({ message: "Trigger Analysis Failed!!" });
+    }
+  };
 
   console.log("value", searchValue);
 

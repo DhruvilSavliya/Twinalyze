@@ -1,0 +1,20 @@
+.chartAreaWrapper {
+  height: 300px;
+  width: 300px;
+  margin: auto;
+}
+
+/* @media (max-width: 600px) {
+  .chartAreaWrapper {
+    height: 400px;
+    width: 400px;
+    margin: auto;
+  }
+}
+
+@media (max-width: 400px) {
+  .chartAreaWrapper {
+    height: 320px;
+    width: 320px;
+  }
+} */
