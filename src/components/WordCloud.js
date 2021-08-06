@@ -14,7 +14,6 @@ const  NamedEntities = () => {
   const { id } = useParams()
   const [words, setWords] = useState([])
   const history = useHistory()
-  const [tempwords, setTempWords] = useState([])
 
   useEffect(() => {
       wordCloudData(id)
@@ -30,7 +29,7 @@ const  NamedEntities = () => {
         x.forEach(function (arrayItem) {
           let word = {}
           word["text"] = arrayItem.Text;
-          word["value"] = arrayItem.Score*10;
+          word["value"] = arrayItem.Score*20 + Math.random() * 60;
           words.push(word)
 
       });
@@ -46,7 +45,7 @@ const  NamedEntities = () => {
     
   return (
       <div className="word-cloud">
-          <h1>Word Cloud</h1>
+          <h1 className="text-center">Word Cloud</h1>
           <ReactWordcloud
           words={words}
           options={{
@@ -62,10 +61,7 @@ const  NamedEntities = () => {
               deterministic: false,
               fontFamily: "impact",
               fontSizes: [20, 35],
-              // fontSizes: [20, 60],
               fontStyle: "normal",
-              fontWeight: "bold",
-              // padding: 1,
               rotations: 2,
               rotationAngles: [46, 0],
               scale: "linear",
