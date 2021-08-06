@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { Auth } from "aws-amplify";
 import axios, { Routes } from "../../services/axios";
 import SentimentBarGraph from "../../components/sentiment-bar-graph/SentimentBarGraph";
+import AnalysisPage from "../analysispage/AnalysisPage";
 
 const cx = c.bind(styles);
 
@@ -61,6 +62,7 @@ const SearchPage = () => {
 
   return (
     <div className={cx("container")}>
+      <AnalysisPage />
       <Search
         value={searchValue}
         className={cx("search-box")}
