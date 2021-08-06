@@ -1,6 +1,7 @@
 const db = require('../lib/db-connection');
+const moment = require('moment');
 class AnalysisModel{
-    static async startAnalysis(analysisId, uid) {
+    static async startAnalysis(analysisId, uid, searchKeyword) {
         return new Promise(async(resolve, reject) => {
             try {
                 const params = {
@@ -8,6 +9,8 @@ class AnalysisModel{
                     Item: {
                         analysis_id: analysisId,
                         uid,
+                        searchKeyword,
+                        date: moment().unix(),
                         status: "PENDING"
                     }
                 };
