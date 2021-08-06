@@ -10,8 +10,10 @@ RUN npm install -g serve
 
 RUN npm install
 
-RUN npm run build
+# RUN npm run build
 
-EXPOSE 8080
+EXPOSE 3000
+EXPOSE 5000
 
-CMD ["serve", "-s", "-l", "8080", "./build"]
+# CMD ["serve", "-s", "-l", "8080", "./build", "node", "server.js"]
+CMD ["npm", "start", "&&", "node", "./backend/server.js"]
