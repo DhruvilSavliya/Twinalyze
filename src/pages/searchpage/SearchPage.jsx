@@ -9,6 +9,8 @@ import { Table } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
 import { Auth } from 'aws-amplify'
 import axios, { Routes } from '../../services/axios'
+import SentimentBarGraph from '../../components/sentiment-bar-graph/SentimentBarGraph'
+import AnalysisPage from '../analysispage/AnalysisPage'
 
 const cx = c.bind(styles)
 
@@ -27,7 +29,7 @@ const SearchPage = () => {
     const { url, method } = Routes.api.getRecentSearches(userId)
     const { data } = await axios[method](url)
     setTableData(data.data)
-  }, [])
+  }, [tableData])
 
   const fetchUserInfo = async () => {
     const userInfo = await Auth.currentUserPoolUser()
@@ -71,10 +73,9 @@ const SearchPage = () => {
     }
   }
 
-  console.log('value', searchValue)
-
   return (
     <div className={cx('container')}>
+      <AnalysisPage />
       <Search
         value={searchValue}
         className={cx('search-box')}
@@ -120,19 +121,6 @@ const SearchPage = () => {
 }
 
 export default SearchPage
-
-// <List
-//           size="medium"
-//           className={cx("recent-search")}
-//           header={<div>Recent Searches</div>}
-//           bordered
-//           dataSource={recentSearchList.filter(
-//             (searchTerm) =>
-//               searchTerm.replace(" ", "").length !== 0 &&
-//               searchTerm.match(new RegExp(searchValue, "i")) !== null
-//           )}
-//           renderItem={(item) => <List.Item>{item}</List.Item>}
-//         />
 
 // {data.map((d) => (
 //   <tr key={d.analysis_id}>
