@@ -4,14 +4,18 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
+    "@aws-amplify/ui-react": "^1.2.6",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "antd": "^4.16.8",
-    "@aws-amplify/ui-react": "^1.2.6",
     "aws-amplify": "^4.2.0",
+    "aws-sdk": "^2.960.0",
+    "body-parser": "^1.19.0",
     "bootstrap": "^5.0.2",
     "classnames": "^2.3.1",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
     "node-sass": "^6.0.1",
     "react": "^17.0.2",
     "react-bootstrap": "^1.6.1",
@@ -21,7 +25,8 @@
     "web-vitals": "^1.1.2",
     "chart.js": "^2.9.4",
     "chartjs-plugin-datalabels": "^0.7.0",
-    "chartjs-plugin-labels": "^1.1.0"
+    "chartjs-plugin-labels": "^1.1.0",
+    "twit": "^2.2.11"
   },
   "scripts": {
     "start": "react-scripts start",
