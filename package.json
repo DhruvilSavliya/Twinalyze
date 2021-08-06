@@ -12,7 +12,10 @@
     "aws-amplify": "^4.2.0",
     "aws-sdk": "^2.960.0",
     "body-parser": "^1.19.0",
-    "bootstrap": "^5.0.2",
+    "bootstrap": "^5.1.0",
+    "chart.js": "^2.9.4",
+    "chartjs-plugin-datalabels": "^0.7.0",
+    "chartjs-plugin-labels": "^1.1.0",
     "classnames": "^2.3.1",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
@@ -22,12 +25,9 @@
     "react-dom": "^17.0.2",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
-    "web-vitals": "^1.1.2",
-    "chart.js": "^2.9.4",
-    "chartjs-plugin-datalabels": "^0.7.0",
-    "chartjs-plugin-labels": "^1.1.0",
     "react-wordcloud": "^1.2.7",
-    "twit": "^2.2.11"
+    "twit": "^2.2.11",
+    "web-vitals": "^1.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
