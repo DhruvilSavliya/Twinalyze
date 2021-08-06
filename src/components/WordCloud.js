@@ -1,54 +1,81 @@
 import React from 'react';
- 
-import axios from 'axios';
+import { notification } from 'antd';
 import ReactWordcloud from 'react-wordcloud';
- 
-export default class NamedEntities extends React.Component {
+import { useState } from 'react'
 
-    state = {
-        words: []
-    }
+import { useEffect } from 'react'
+
+import { useParams } from 'react-router'
+import { useHistory } from 'react-router-dom'
+import axios, { Routes } from "../services/axios";
  
-    componentDidMount() {
-        axios.get('')
-            .then(res => {
-                const words = res.data;
-                console.log(words);
-                this.setState({words:words});
-            })
+const  NamedEntities = () => {
+
+  const { id } = useParams()
+  const [words, setWords] = useState([])
+  const history = useHistory()
+  const [tempwords, setTempWords] = useState([])
+
+  useEffect(() => {
+      wordCloudData(id)
+      console.log(id)
+  }, [id])
+
+  const wordCloudData = async (id) => {
+    const { url, method } = Routes.api.getTweetReportByAnalysisId(id)
+    try {
+      const { data } = await axios[method](url)
+      for (var i=0; i<data.data.length; i++) {
+        let x = JSON.parse(data.data[i]["key_phrases"]);
+        x.forEach(function (arrayItem) {
+          let word = {}
+          word["text"] = arrayItem.Text;
+          word["value"] = arrayItem.Score*10;
+          words.push(word)
+
+      });
+      console.log(words)   
+     }
+    } catch (err) {
+      notification.error({
+        message: 'Error in fetching data',
+      })
     }
- 
-    render() {
-        return (
-            <div className="word-cloud">
-                <h1>Word Cloud</h1>
-                <ReactWordcloud
-                words={this.state.words}
-                options={{
-                    colors: [
-                      "#1f77b4",
-                      "#ff7f0e",
-                      "#2ca02c",
-                      "#d62728",
-                      "#9467bd",
-                      "#8c564b",
-                    ],
-                    enableTooltip: true,
-                    deterministic: false,
-                    fontFamily: "impact",
-                    fontSizes: [20, 35],
-                    // fontSizes: [20, 60],
-                    fontStyle: "normal",
-                    fontWeight: "bold",
-                    // padding: 1,
-                    rotations: 2,
-                    rotationAngles: [46, 0],
-                    scale: "linear",
-                    spiral: "rectangular",
-                    transitionDuration: 10,
-                  }}
-                />
-                </div>
-        )
-    }
+  }
+
+    
+  return (
+      <div className="word-cloud">
+          <h1>Word Cloud</h1>
+          <ReactWordcloud
+          words={words}
+          options={{
+              colors: [
+                  "#1f77b4",
+                  "#ff7f0e",
+                  "#2ca02c",
+                  "#d62728",
+                  "#9467bd",
+                  "#8c564b",
+              ],
+              enableTooltip: true,
+              deterministic: false,
+              fontFamily: "impact",
+              fontSizes: [20, 35],
+              // fontSizes: [20, 60],
+              fontStyle: "normal",
+              fontWeight: "bold",
+              // padding: 1,
+              rotations: 2,
+              rotationAngles: [46, 0],
+              scale: "linear",
+              spiral: "rectangular",
+              transitionDuration: 10,
+              }}
+          />
+          </div>
+  )
+    
 }
+
+export default NamedEntities;

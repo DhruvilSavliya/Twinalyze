@@ -8,6 +8,7 @@ import { useParams } from 'react-router'
 import { useHistory } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import SentimentBarGraph from '../../components/sentiment-bar-graph/SentimentBarGraph'
+import NamedEntities from '../../components/WordCloud'
 import SentimentGraph from '../../components/sentiment-graph/SentimentGraph'
 import axios, { Routes } from '../../services/axios'
 
@@ -15,7 +16,7 @@ const AnalysisPage = () => {
   const { id } = useParams()
   const [sentimentArray, setSentimentArray] = useState([])
   const [tweetList, setTweetList] = useState([])
-
+  const [tempwords, setTempWords] = useState([])
   const history = useHistory()
 
   useEffect(() => {
@@ -50,12 +51,14 @@ const AnalysisPage = () => {
     }
   }
 
+ 
   return (
     <Container>
       <div>
         <Button onClick={() => history.push('/')} variant='success'>
           Go Back
         </Button>
+        <NamedEntities/>
         <Fragment>
           {tweetList &&
             tweetList
