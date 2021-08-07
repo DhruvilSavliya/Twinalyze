@@ -34,13 +34,13 @@ const SentimentBarGraph = ({ tweetNumber, sentimentScore, sentiment }) => {
       },
       {
         label: "NEUTRAL",
-        data: [sentimentScore.Negative],
+        data: [sentimentScore.Neutral],
         borderColor: "blue",
         backgroundColor: "blue",
       },
       {
         label: "NEGATIVE",
-        data: [sentimentScore.Neutral],
+        data: [sentimentScore.Negative],
         borderColor: "red",
         backgroundColor: "red",
       },

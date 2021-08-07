@@ -58,7 +58,7 @@ const NamedEntities = () => {
           enableTooltip: true,
           deterministic: false,
           fontFamily: "impact",
-          fontSizes: [20, 40],
+          fontSizes: [20, 30],
           // fontSizes: [20, 60],
           fontStyle: "normal",
           fontWeight: "bold",
