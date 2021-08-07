@@ -101,19 +101,25 @@ const SearchPage = () => {
             </tr>
           </thead>
           <tbody>
-            {tableData.map((d) => (
-              <tr key={d.analysis_id}>
-                <td onClick={() => tableRowClickHandler(d.analysis_id)}>
-                  {d.analysis_status}
-                </td>
-                <td onClick={() => tableRowClickHandler(d.analysis_id)}>
-                  {moment.unix(d.date).format("LLL")}
-                </td>
-                <td onClick={() => tableRowClickHandler(d.analysis_id)}>
-                  {d.searchKeyword}
-                </td>
-              </tr>
-            ))}
+            {tableData
+              .sort((a, b) => new Date(b.date) - new Date(a.date))
+              .map((d) => (
+                <tr
+                  onClick={() =>
+                    d.analysis_status === "PENDING"
+                      ? alert("Tweet is still in process")
+                      : tableRowClickHandler(d.analysis_id)
+                  }
+                  style={{
+                    cursor: "pointer",
+                  }}
+                  key={d.analysis_id}
+                >
+                  <td>{d.analysis_status}</td>
+                  <td>{moment.unix(d.date).format("LLL")}</td>
+                  <td>{d.searchKeyword}</td>
+                </tr>
+              ))}
           </tbody>
         </Table>
       </div>
