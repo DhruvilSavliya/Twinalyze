@@ -1,7 +1,10 @@
 {
   "name": "csci5409",
   "version": "0.1.0",
-  "private": true,
+  "description": "",
+  "main": "server.js",
+  "author": "",
+  "license": "ISC",
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
     "@aws-amplify/ui-react": "^1.2.6",
@@ -32,7 +35,7 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

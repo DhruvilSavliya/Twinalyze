@@ -1,12 +1,13 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const routes = require("./routes/");
+const routes = require("./routes");
 const response = require("./middlewares/response");
 const cors = require("cors");
-const PORT = process.env.PORT || 5000;
 
 const app = express();
 app.use(cors());
+app.use(express.json());
+
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
@@ -17,7 +18,7 @@ app.use((req, res, next) => {
     "Access-Control-Allow-Methods",
     "GET, POST, PUT, DELETE, OPTIONS"
   );
-  res.setHeader("Content-Type", "application/json");
+  // res.setHeader("Content-Type", "application/json");
 
   next();
 });
@@ -28,8 +29,9 @@ app.use(
 );
 app.use("/api/", routes);
 
-app.listen(PORT, () => console.log(`Port listening at: ${PORT}`));
 process.on("uncaughtException", function (err) {
   console.error(err.stack);
   console.info("Server Restarting...");
 });
+
+module.exports = app;

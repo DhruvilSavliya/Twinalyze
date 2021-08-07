@@ -1,7 +1,7 @@
 import axios from "axios";
 import api from "./api/api";
 
-axios.defaults.baseURL = `http://localhost:5000/api`;
+axios.defaults.baseURL = `http://csci5409group9-env.eba-wdps6qef.us-east-1.elasticbeanstalk.com/api`;
 
 axios.interceptors.request.use(
   function (config) {
