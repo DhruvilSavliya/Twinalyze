@@ -66,7 +66,11 @@ const AnalysisPage = () => {
               .sort((a, b) => a.tweetNumber - b.tweetNumber)
               .map((tweet, index) => {
                 return (
-                  <div className="mt-3" style={{ border: "2px solid black" }}>
+                  <div
+                    key={index}
+                    className="mt-3"
+                    style={{ border: "2px solid black" }}
+                  >
                     <Row className="w-100">
                       <Col className="d-flex flex-column justify-content-center w-100">
                         <div className="text-center py-2">
